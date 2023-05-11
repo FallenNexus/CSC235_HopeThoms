@@ -12,10 +12,12 @@ class Person:
 person1 = Person(name= "", age= "", favoriteColor= "") 
 
 #regular print command
-print("nice to meet you:")
+print("Nice to meet you:")
 
 #prints the input name, age, and favorite color
-print(person1.name), print(person1.age), print(person1.favoriteColor) 
+print(person1.name) 
+print(person1.age) 
+print(person1.favoriteColor) 
 
 #another regular print command
 print("Now that you've told me your name I'll tell you mine :)")
@@ -24,7 +26,9 @@ print("Now that you've told me your name I'll tell you mine :)")
 person2 = Person("Hope", 19, "Electric blue")
 
 #prints the hardcoded name, age, and favorite color
-print(person2.name) print(person2.age), print(person2.favoriteColor) 
+print(person2.name) 
+print(person2.age) 
+print(person2.favoriteColor) 
 
 #last regular print command
 print("BYEEEEEEEE")
