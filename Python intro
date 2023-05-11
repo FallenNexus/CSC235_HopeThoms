@@ -1,0 +1,25 @@
+#this prints the text in the (). this shows before anything else
+print("Hello, nice to meet you, please enter you name, age, and favorite color")
+
+#this is a class titled person to return the name, age, and favorite color. This same class also allows it to display the info I have hard coded in
+class Person:
+    def __init__(self, name, age, favoriteColor):
+        self.name = input(name)
+        self.age = input(age)
+        self.favoriteColor = input(favoriteColor)
+
+person1 = Person(name= "", age= "", favoriteColor= "")
+
+print("nice to meet you:")
+
+print(person1.name)
+print(person1.age)
+print(person1.favoriteColor)
+
+print("Now that you've told me your name I'll tell you mine :)")
+
+person2 = Person("Hope", 19, "Electric blue")
+
+print(person2.name)
+print(person2.age)
+print(person2.favoriteColor)
