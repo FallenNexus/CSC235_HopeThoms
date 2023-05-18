@@ -1,0 +1,37 @@
+#I learned how to make this game from https://realpython.com/python-rock-paper-scissors/
+#I learned how to format the loop from https://www.programiz.com/python-programming/looping-technique
+#I learned how to format the function from https://www.w3schools.com/python/python_functions.asp
+
+#Fuction that can be called to loop everything easier
+def RockPaperScissorsFunction():
+    print("Lets play rock, paper, scissors!")
+
+    import random #imports thr random functionality
+
+    user_action = input("Type your move (Rock, Paper, Scissors): ") #Adds user input while also printing text
+
+    possible_actions = ["Rock", "Paper", "Scissors"] #variable of possible actions for the player and computer to choose from
+
+    computer_action = random.choice(possible_actions) #variable to call that allows the computer to choose rock, paper, or scissors randomly
+    print(f"\nYou chose {user_action}, The computer chose {computer_action}.\n") #Prints the pre-programmed text, stored user_action, and computer_action
+    if user_action == computer_action: #if the user action and computer action are the same it prints a tie
+        print(f"Both players selected {user_action}. It's a tie!")
+    elif user_action == "Rock": #If the user picks rock but the computer picks scissors or rock, it prints the corresponding text
+        if computer_action == "Scissors":
+            print("Rock destroys scissors! You win!")
+        else:
+            print("Paper smothers rock! You lose.")
+    elif user_action == "Paper": #If the user picks paper but the computer picks paper or scissors, it prints the corresponding text
+        if computer_action == "Rock":
+            print("Paper smothers rock! You win!")
+        else:
+            print("Scissors cut paper! You lose.")
+    elif user_action == "Scissors": #If the user picks scissors but the computer picks paper or scissors, it prints the corresponding text
+        if computer_action == "Paper":
+            print("Scissors cut Paper! You win!")
+        else:
+            print("Rock destroys scissors! You lose.") 
+
+#Loops the entire fuction
+while True:
+    RockPaperScissorsFunction()
