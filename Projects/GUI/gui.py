@@ -127,10 +127,17 @@ def update_positions():
 
 # Function to handle the game loop
 def game_loop():
-    if not Game_Over:
+    if Game_Over == False:
         update_positions()
         turtle.update()
         turtle.ontimer(game_loop, 50)  # Repeat the game loop after 50 milliseconds
+    elif Game_Over == True:
+        Game_Over_display = turtle.Turtle()
+        Game_Over_display.color("white")
+        Game_Over_display.penup()
+        Game_Over_display.hideturtle()
+        Game_Over_display.goto(0, 0)
+        Game_Over_display.write("Game Over! {} wins!".format(Winner), align="center", font=("Arial", 36, "normal"))
 
 # Adding the user input controls
 
@@ -159,14 +166,5 @@ turtle.onkeypress(Paddle2Down, "Down")
 
 # Start the game loop
 game_loop()
-
-# Creating the Game Over screen
-if Game_Over:
-    Game_Over_display = turtle.Turtle()
-    Game_Over_display.color("white")
-    Game_Over_display.penup()
-    Game_Over_display.hideturtle()
-    Game_Over_display.goto(0, 0)
-    Game_Over_display.write("Game Over! {} wins!".format(Winner), align="center", font=("Arial", 36, "normal"))
 
 turtle.done()
