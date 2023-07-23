@@ -1,5 +1,5 @@
 #I learned to make the Pong game here: https://www.freecodecamp.org/news/how-to-code-pong-in-python/
-#Debugging help provided by the amazing 24/7 chatGPT
+#Debugging help provided by the amazing 24/7 chatGPT conversation link: https://chat.openai.com/share/8e2c590c-593a-4ba1-abae-3e1d68b3d5db 
 
 import turtle
 
@@ -67,45 +67,56 @@ score_display.write("Player 1: 0 Player 2: 0", align="center", font=("Arial", 24
 def update_positions():
     global Game_Over, Winner
 
+    #debugging
+    print("Paddle1 y:", Paddle1.ycor())
+    print("Paddle2 y:", Paddle2.ycor())
+    print("Ball x:", ball.xcor())
+    print("Ball y:", ball.ycor())
+
     # Move paddles
     Paddle1.sety(Paddle1.ycor() + Paddle1.dy)
     Paddle2.sety(Paddle2.ycor() + Paddle2.dy)
 
     # Check for paddle collision with the screen boundaries
     for paddle in [Paddle1, Paddle2]:
-        if paddle.ycor() > 250:
-            paddle.sety(250)
-        elif paddle.ycor() < -250:
-            paddle.sety(-250)
+        if paddle.ycor() > (turtle.window_height() / 2) - 50:
+            paddle.sety((turtle.window_height() / 2) - 50)
+        elif paddle.ycor() < -((turtle.window_height() / 2) - 50):
+            paddle.sety(-((turtle.window_height() / 2) - 50))
+
+# Check for ball collision with the paddles
+    if (ball.xcor() > 320 and ball.xcor() < 340) and (Paddle2.ycor() + 50 > ball.ycor() > Paddle2.ycor() - 50):
+        ball.setx(320)
+        ball.dx *= -1
+    elif (ball.xcor() < -320 and ball.xcor() > -340) and (Paddle1.ycor() + 50 > ball.ycor() > Paddle1.ycor() - 50):
+        ball.setx(-320)
+        ball.dx *= -1
+
+    # Check for ball collision with the side walls
+    if ball.xcor() > (turtle.window_width() / 2) - 10:
+        ball.goto(0, 0)
+        ball.dx *= -1
+        Points["Player1"] += 1
+    elif ball.xcor() < -((turtle.window_width() / 2) - 10):
+        ball.goto(0, 0)
+        ball.dx *= -1
+        Points["Player2"] += 1
 
     # Move the ball
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
 
+    print("Ball x, y:", ball.xcor(), ball.ycor())
+
     # Check for ball collision with the top and bottom screen boundaries
-    if ball.ycor() > 290 or ball.ycor() < -290:
-        ball.sety(290 if ball.ycor() > 0 else -290)
+    if ball.ycor() > (turtle.window_height() / 2) - 10:
+        ball.sety((turtle.window_height() / 2) - 10)
+        ball.dy *= -1
+    elif ball.ycor() < -((turtle.window_height() / 2) - 10):
+        ball.sety(-((turtle.window_height() / 2) - 10))
         ball.dy *= -1
 
-    # Check for ball collision with the paddles
-    if (ball.xcor() > 330 and ball.xcor() < 340) and (Paddle2.ycor() + 50 > ball.ycor() > Paddle2.ycor() - 50):
-        ball.setx(330)
-        ball.dx *= -1
-    elif (ball.xcor() < -330 and ball.xcor() > -340) and (Paddle1.ycor() + 50 > ball.ycor() > Paddle1.ycor() - 50):
-        ball.setx(-330)
-        ball.dx *= -1
-
-    # Check for scoring points
-    if ball.xcor() > 390:
-        ball.goto(0, 0)
-        ball.dx *= -1
-        Points["Player1"] += 1
-    elif ball.xcor() < -390:
-        ball.goto(0, 0)
-        ball.dx *= -1
-        Points["Player2"] += 1
-
-    # Update the score text
+      # Update the score text
     score_display.clear()
     score_display.write("Player 1: {}   Player 2: {}".format(Points["Player1"], Points["Player2"]), align="center", font=("Arial", 24, "normal"))
 
@@ -114,8 +125,12 @@ def update_positions():
         Game_Over = True
         Winner = "Player1" if Points["Player1"] > Points["Player2"] else "Player2"
 
+# Function to handle the game loop
+def game_loop():
     if not Game_Over:
-        turtle.ontimer(update_positions, 50)  # Repeat the update after 50 milliseconds
+        update_positions()
+        turtle.update()
+        turtle.ontimer(game_loop, 50)  # Repeat the game loop after 50 milliseconds
 
 # Adding the user input controls
 
@@ -142,6 +157,9 @@ turtle.onkeypress(Paddle1Down, "s")
 turtle.onkeypress(Paddle2Up, "Up")
 turtle.onkeypress(Paddle2Down, "Down")
 
+# Start the game loop
+game_loop()
+
 # Creating the Game Over screen
 if Game_Over:
     Game_Over_display = turtle.Turtle()
@@ -151,7 +169,4 @@ if Game_Over:
     Game_Over_display.goto(0, 0)
     Game_Over_display.write("Game Over! {} wins!".format(Winner), align="center", font=("Arial", 36, "normal"))
 
-#Start game loop
-while not Game_Over:
-    update_positions()
-    turtle.update()
+turtle.done()
